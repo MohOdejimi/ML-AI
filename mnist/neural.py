@@ -4,6 +4,7 @@ import torchvision.datasets as datasets
 from torchvision import transforms
 from torch.utils.data import DataLoader
 from torch import nn
+from torch import optim
 
 
 # CREATE TRAIN AND TEST SAMPLES 
@@ -35,10 +36,16 @@ class NeuralNetwork(nn.Module):
     def forward(self, x):
         x = self.flatten(x)
         x = nn.functional.relu(self.layer_1(x))
+        x = self.layer_2(x)
 
         return x 
 
 
 model = NeuralNetwork(in_features, hidden_states, output)
+
+learning_rate = 0.01
+loss_fn = nn.CrossEntropyLoss()
+optimizer = optim.SGD(model.parameters(), learning_rate)
+
 
 
