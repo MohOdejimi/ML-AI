@@ -20,7 +20,7 @@ mnist_testdataloader = DataLoader(dataset = mnist_test, batch_size = batch_size,
 
 # CREATE NEURAL NETWORK
 in_features = 784 
-hidden_states = 128
+hidden_states = 130
 output = 10 
 
 class NeuralNetwork(nn.Module):
@@ -46,7 +46,7 @@ learning_rate = 0.01
 loss_fn = nn.CrossEntropyLoss()
 optimizer = optim.SGD(model.parameters(), learning_rate)
 
-num_epochs = 10
+num_epochs = 25
 loss_values = []
 
 for epoch in range(num_epochs):
@@ -68,7 +68,6 @@ plt.xlabel("Training Steps")
 plt.ylabel("Loss")
 
 plt.savefig("loss.png")
- 
 
 test_instances = len(mnist_test)
 
@@ -77,7 +76,16 @@ test_instances = len(mnist_test)
 num_pred = []
 num_target = []
 correct = 0 
-total = 0 
+total = test_instances 
+
+with torch.no_grad():
+    for tensor, label in mnist_testdataloader:
+        output = model(tensor)
+        predicted_class_index = torch.argmax(output, dim = 1)
+        correct += (predicted_class_index == label).sum().item()
 
 
+model_accuracy = 100 * correct / total 
 
+print(f'The accuracy of the network on {test_instances} instances is {model_accuracy}%')
+        
