@@ -31,4 +31,8 @@ cicd = [
         r"(?:what is|explain) (?:an )?artifact[?.! ]*", 
             "An artifact is an output of a build or job, such as a test report or compiled package."
     ),
+    (
+        r"(?:what is|explain) Docker[?.!]*",
+            "Docker is an open platform (launched in 2013 by Docker, Inc.) that uses OS‑level virtualization to package and run applications inside lightweight, portable containers, ensuring consistent behavior across environments."
+    )
 ]
